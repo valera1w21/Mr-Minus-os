@@ -3,7 +3,7 @@
 
 int main() {
     printf("do\n");
-    fork();
-    printf("posle\n");
+    int rezultat = fork();
+printf("posle, u menya %d\n", rezultat);
     return 0;
 }
