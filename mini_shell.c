@@ -21,7 +21,24 @@ int main() {
             n++;
             slovo = strtok(NULL, " ");
         }
+
         slova[n] = NULL;
+
+        if (slova[0] == NULL) {
+            continue;
+        }
+
+        if (strcmp(slova[0], "exit") == 0) {
+         exit(0);
+        }
+
+        if (strcmp(slova[0], "cd") == 0) {
+        if (slova[1] == NULL) {
+        continue;
+        }
+        chdir(slova[1]);
+        continue;
+        }
 
         int rezultat = fork();
         if (rezultat == 0) {

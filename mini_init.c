@@ -20,7 +20,7 @@ int main() {
     if (rezultat == 0) {
         setsid();
         ioctl(0, TIOCSCTTY, 1);
-        execlp("/bin/sh", "sh", NULL);
+        execlp("/bin/moysh", "moysh", NULL);
         perror("execlp");
         exit(1);
     } 
