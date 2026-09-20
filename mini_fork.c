@@ -7,13 +7,16 @@ int main() {
     printf("do\n");
     int rezultat = fork();
 
+
     if (rezultat == 0) {
         execlp("ls", "ls", NULL);
         perror("execlp");
         exit(1);
     } else {
-        wait(NULL); 
+        int status;
+        wait(&status); 
         printf("parent\n");
+        printf("rebenok vyshel s kodom %d\n", WEXITSTATUS(status));
 
     }
     return 0;
