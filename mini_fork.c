@@ -4,6 +4,10 @@
 int main() {
     printf("do\n");
     int rezultat = fork();
-printf("posle, u menya %d\n", rezultat);
+    if (rezultat == 0) {
+        printf("child\n");
+    } else {
+        printf("parent\n");
+    }
     return 0;
 }
