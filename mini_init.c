@@ -10,6 +10,9 @@ int main() {
     mount("sysfs", "/sys", "sysfs", 0, NULL);
 
     printf("Test-init\n");
+
+
+    while (1) {
     int rezultat = fork();
 
 
@@ -18,9 +21,6 @@ int main() {
         perror("execlp");
         exit(1);
     } 
-
-
-    while (1) {
     wait(NULL);
    }
 
