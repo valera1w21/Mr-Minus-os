@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <sys/wait.h>
 
 int main() {
     printf("do\n");
@@ -11,6 +12,7 @@ int main() {
         perror("execlp");
         exit(1);
     } else {
+        wait(NULL); 
         printf("parent\n");
 
     }
