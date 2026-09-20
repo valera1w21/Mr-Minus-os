@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/mount.h>
+#include <sys/ioctl.h>
 
 int main() {
     mount("proc", "/proc", "proc", 0, NULL);
@@ -17,6 +18,8 @@ int main() {
 
 
     if (rezultat == 0) {
+        setsid();
+        ioctl(0, TIOCSCTTY, 1);
         execlp("/bin/sh", "sh", NULL);
         perror("execlp");
         exit(1);
