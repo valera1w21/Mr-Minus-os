@@ -3,8 +3,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/mount.h>
 
 int main() {
+    mount("proc", "/proc", "proc", 0, NULL);
+    mount("sysfs", "/sys", "sysfs", 0, NULL);
+
     printf("Test-init\n");
     int rezultat = fork();
 
