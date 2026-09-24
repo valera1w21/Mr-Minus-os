@@ -45,7 +45,7 @@ int main() {
             execvp(slova[0], slova);
             perror("execvp");
             exit(1);
-        } else {
+             } else {
             int status;
             wait(&status);
         }

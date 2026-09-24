@@ -1,0 +1,5 @@
+*_arm
+*.img
+*.ko
+*.gz
+ramdisk/
