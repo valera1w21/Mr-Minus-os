@@ -2,4 +2,4 @@
 *.img
 *.ko
 *.gz
-ramdisk/
+ramdisk/build/
