@@ -21,15 +21,15 @@ int main() {
     
 
 
-    unsigned char *ekran = mmap(NULL, fi.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
-    if (ekran == MAP_FAILED) {
+    unsigned char *screen = mmap(NULL, fi.smem_len, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, 0);
+    if (screen == MAP_FAILED) {
     perror("mmap");
     return 1;
     }
 
     for (int y = 0; y < vi.yres; y++) {
        for (int x = 0; x < vi.xres; x++) {
-       uint32_t *pixel = (uint32_t *)(ekran + y * fi.line_length + x * 4);
+       uint32_t *pixel = (uint32_t *)(screen + y * fi.line_length + x * 4);
        *pixel = ((uint32_t)(x * 255 / vi.xres) << 16) | ((uint32_t)(y * 255 / vi.yres) << 8) | (uint32_t)(255 - (x * 255 / vi.xres));
        }
 }

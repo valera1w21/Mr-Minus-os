@@ -40,8 +40,8 @@ int main() {
         continue;
         }
 
-        int rezultat = fork();
-        if (rezultat == 0) {
+        int pid = fork();
+        if (pid == 0) {
             execvp(slova[0], slova);
             perror("execvp");
             exit(1);

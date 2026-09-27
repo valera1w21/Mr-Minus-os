@@ -5,10 +5,10 @@
 
 int main() {
     printf("do\n");
-    int rezultat = fork();
+    int pid = fork();
 
 
-    if (rezultat == 0) {
+    if (pid == 0) {
         execlp("ls", "ls", NULL);
         perror("execlp");
         exit(1);

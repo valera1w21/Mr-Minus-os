@@ -8,16 +8,16 @@
 #include <fcntl.h>
 
 // загружает один модуль ядра по пути к файлу
-void zagruzi(const char *put) {
-    int fd = open(put, O_RDONLY);
+void load_module(const char *path) {
+    int fd = open(path, O_RDONLY);
     if (fd < 0) {
-        perror(put);
+        perror(path);
         return;
     }
     if (syscall(SYS_finit_module, fd, "", 0) != 0) {
-        perror(put);
+        perror(path);
     } else {
-        printf("zagruzil: %s\n", put);
+        printf("loaded: %s\n", path);
     }
     close(fd);
 }
@@ -35,38 +35,38 @@ int main() {
     int k = open("/dev/tty1", O_RDWR);
     dup2(k, 1);
     dup2(k, 2);
-    printf(">>> MOY INIT ZAPUSTILSYA <<<\n");
+    printf(">>> MINUS INIT STARTED <<<\n");
 
-    zagruzi("/lib/modules/hid.ko");
-    zagruzi("/lib/modules/usbhid.ko");
-    zagruzi("/lib/modules/hid-generic.ko");
-    zagruzi("/lib/modules/evdev.ko");
-    zagruzi("/lib/modules/uinput.ko");
+    load_module("/lib/modules/hid.ko");
+    load_module("/lib/modules/usbhid.ko");
+    load_module("/lib/modules/hid-generic.ko");
+    load_module("/lib/modules/evdev.ko");
+    load_module("/lib/modules/uinput.ko");
      // экранная клавиатура — живёт в фоне всё время
     if (fork() == 0) {
-        execl("/bin/moy_kbd", "moy_kbd", NULL);
-        perror("moy_kbd");
+        execl("/bin/mkbd", "mkbd", NULL);
+        perror("mkbd");
         exit(1);
     }
     sleep(1);
 
     while (1) {
-        int rezultat = fork();
+        int pid = fork();
 
-        if (rezultat == 0) {
+        if (pid == 0) {
             setsid();
 
-            int konsol = open("/dev/tty1", O_RDWR);
-            dup2(konsol, 0);
-            dup2(konsol, 1);
-            dup2(konsol, 2);
+            int console_fd = open("/dev/tty1", O_RDWR);
+            dup2(console_fd, 0);
+            dup2(console_fd, 1);
+            dup2(console_fd, 2);
             ioctl(0, TIOCSCTTY, 1);
 
-            execlp("/bin/moysh", "moysh", NULL);
+            execlp("/bin/msh", "msh", NULL);
             perror("execlp");
             exit(1);
         }
-        waitpid(rezultat, NULL, 0);
+        waitpid(pid, NULL, 0);
         sleep(1);
     }
 
